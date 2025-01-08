@@ -1,11 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography, Button, CardActionArea, CardActions } from '@mui/material';
+import { favoriteStore } from '../store/FavStore';
+import { observer } from 'mobx-react';
 
-const MovieCard = ({ movie }: { movie: any }) => {
+const MovieCard = observer(({ movie }: { movie: any }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
         navigate(`/movie/${movie.imdbID}`);
+    };
+
+    const handleAddToFavorite = () => {
+        favoriteStore.addFavorite(movie);
     };
 
     return (
@@ -27,12 +33,12 @@ const MovieCard = ({ movie }: { movie: any }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" onClick={handleAddToFavorite}>
                     add to favorite
                 </Button>
             </CardActions>
         </Card>
     );
-};
+});
 
 export default MovieCard;

@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import { movieStore } from '../store/MovieStore';
 import { fetchMovies } from '../api';
 
@@ -66,6 +67,10 @@ const SearchAppBar = observer(() => {
         navigate('/');
     };
 
+    const handleFavoritesClick = () => {
+        navigate('/favorites');
+    };
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -90,6 +95,9 @@ const SearchAppBar = observer(() => {
                             onChange={handleSearch}
                         />
                     </Search>
+                    <Button color="inherit" onClick={handleFavoritesClick}>
+                        Favorites
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Box>

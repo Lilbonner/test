@@ -1,14 +1,17 @@
 import { observer } from 'mobx-react';
+import { Grid } from '@mui/material';
 import { movieStore } from '../store/MovieStore';
 import MovieCard from './MovieCard';
 
 const MovieList = observer(() => {
     return (
-        <div>
+        <Grid container spacing={3} justifyContent="center">
             {movieStore.movies.map((movie: any) => (
-                <MovieCard key={movie.imdbID} movie={movie} />
+                <Grid item xs={12} sm={6} md={4} key={movie.imdbID}>
+                    <MovieCard movie={movie} />
+                </Grid>
             ))}
-        </div>
+        </Grid>
     );
 });
 

@@ -1,44 +1,38 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchMovieDetails } from '../api';
-import { Card, CardContent, Typography, CardMedia } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardMedia, CardContent, Typography, Button, CardActionArea, CardActions } from '@mui/material';
 
-const MovieDetails = () => {
-    const { id } = useParams<{ id: string }>();
-    const [movie, setMovie] = useState<any>(null);
+const MovieCard = ({ movie }: { movie: any }) => {
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchDetails = async () => {
-            const data = await fetchMovieDetails(id);
-            setMovie(data);
-        };
-        fetchDetails();
-    }, [id]);
-
-    if (!movie) return <div>Loading...</div>;
+    const handleClick = () => {
+        navigate(`/movie/${movie.imdbID}`);
+    };
 
     return (
-        <Card>
-            <CardMedia
-                image={movie.Poster}
-                title={movie.Title}
-                style={{ height: 300 }}
-            />
-            <CardContent>
-                <Typography variant="h4">{movie.Title}</Typography>
-                <Typography variant="h6">Genre: {movie.Genre}</Typography>
-                <Typography variant="h6">Director: {movie.Director}</Typography>
-                <Typography variant="body1">{movie.Plot}</Typography>
-                <iframe
-                    src={`https://www.youtube.com/embed/${movie.imdbID}`}
-                    title="Movie Trailer"
-                    width="100%"
-                    height="315"
-                    allowFullScreen
-                ></iframe>
-            </CardContent>
+        <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea onClick={handleClick}>
+                <CardMedia
+                    component="img"
+                    height="200"
+                    image={movie.Poster}
+                    alt={movie.Title}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {movie.Title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {movie.Year}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary">
+                    add to favorite
+                </Button>
+            </CardActions>
         </Card>
     );
 };
 
-export default MovieDetails;
+export default MovieCard;

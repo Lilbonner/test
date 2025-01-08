@@ -13,7 +13,7 @@ const MovieCard = ({ movie }: { movie: any }) => {
             <CardActionArea onClick={handleClick}>
                 <CardMedia
                     component="img"
-                    height="100%"
+                    height="50%"
                     image={movie.Poster}
                     alt={movie.Title}
                 />

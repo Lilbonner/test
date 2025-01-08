@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 import { movieStore } from '../store/MovieStore';
 import { fetchMovies } from '../api';
 
@@ -53,11 +54,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchAppBar = observer(() => {
     const [query, setQuery] = useState('');
+    const navigate = useNavigate();
 
     const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
         const movies = await fetchMovies(event.target.value);
         movieStore.setMovies(movies);
+    };
+
+    const handleTitleClick = () => {
+        navigate('/');
     };
 
     return (
@@ -68,7 +74,8 @@ const SearchAppBar = observer(() => {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
+                        onClick={handleTitleClick}
                     >
                         Movie Search
                     </Typography>
